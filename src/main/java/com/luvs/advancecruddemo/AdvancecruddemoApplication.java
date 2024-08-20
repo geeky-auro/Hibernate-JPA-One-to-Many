@@ -33,10 +33,37 @@ public class AdvancecruddemoApplication {
 //			findCoursesforInstructor(appDAO);
 
 //			findInstructorWithJoinFetch(appDAO);
-			updateInstructor(appDAO);
+//			updateInstructor(appDAO);
+
+//			updateCourse(appDAO);
+
+//			deleteInstructorDetail(appDAO);
+			deleteCourse(appDAO);
 		};
 
 
+
+	}
+
+	private void deleteCourse(AppDAO appDAO) {
+		int theId=10;
+		System.out.println("Deleting course id: "+theId);
+		appDAO.deleteCourseById(theId);
+		System.out.println("Done!");
+	}
+
+	private void updateCourse(AppDAO appDAO) {
+
+		int theId=10;
+		System.out.println("FInding course ID : "+theId);
+		Course tempCourse=appDAO.findCourseById(theId);
+
+		// update the course
+		System.out.println("Updating course id: "+theId);
+		tempCourse.setTitle("Enjoying Simple Things");
+		appDAO.update(tempCourse);
+
+		System.out.println("Done!");
 	}
 
 	private void updateInstructor(AppDAO appDAO) {
@@ -118,10 +145,10 @@ public class AdvancecruddemoApplication {
 	}
 
 	private void deleteInstructorDetail(AppDAO appDAO) {
-		int theId=2;
+		int theId=1;
 		System.out.println("DEleting Instructor of Id:"+theId);
 
-		appDAO.deleteInstructorDetailById(1);
+		appDAO.deleteInstructorDetailById(theId);
 
 
 	}

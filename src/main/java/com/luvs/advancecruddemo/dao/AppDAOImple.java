@@ -1,11 +1,15 @@
 package com.luvs.advancecruddemo.dao;
 
+import com.luvs.advancecruddemo.entity.Course;
 import com.luvs.advancecruddemo.entity.Instructor;
 import com.luvs.advancecruddemo.entity.InstructorDetail;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public class AppDAOImple implements AppDAO{
@@ -60,4 +64,39 @@ public class AppDAOImple implements AppDAO{
         // delete the instructor detail
         entityManager.remove(tempInstructorDetail);
     }
+
+    @Override
+    public List<Course> findCoursesByInstructorId(int theId) {
+        // Create query for Finding Instructor By Id
+        TypedQuery<Course> query =entityManager.createQuery(
+                "from Course where instructor.id= :data",Course.class
+        );
+        query.setParameter("data",theId);
+        //execute the query
+        List<Course> course=query.getResultList();
+        return course;
+    }
+
+    @Override
+    public Instructor findInstructorByJoinFetch(int theId) {
+        // create query
+        TypedQuery<Instructor> query =entityManager.createQuery(
+                "select i from Instructor i "+
+                        "JOIN FETCH i.courses "+
+                        "JOIN FETCH i.instructorDetail "
+                + "where i.id= :data",Instructor.class);
+        query.setParameter("data",theId);
+
+        // execute query
+        Instructor instructor=query.getSingleResult();
+        return instructor;
+    }
+
+    @Override
+    @Transactional
+    public void update(Instructor tempInstructor) {
+        entityManager.merge(tempInstructor);
+    }
+
+
 }

@@ -1,7 +1,10 @@
 package com.luvs.advancecruddemo.dao;
 
+import com.luvs.advancecruddemo.entity.Course;
 import com.luvs.advancecruddemo.entity.Instructor;
 import com.luvs.advancecruddemo.entity.InstructorDetail;
+
+import java.util.List;
 
 public interface AppDAO {
 
@@ -13,4 +16,10 @@ public interface AppDAO {
     InstructorDetail findInstructorDetailById(int theId);
 
     void deleteInstructorDetailById(int theId);
+
+    List<Course> findCoursesByInstructorId(int theId);
+
+    Instructor findInstructorByJoinFetch(int theId);
+
+    void update(Instructor tempInstructor);
 }
